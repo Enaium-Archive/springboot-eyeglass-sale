@@ -2,6 +2,8 @@ package com.example.server.model.entitiy.input;
 
 import java.util.Date;
 
+import com.example.server.model.entitiy.Gender;
+import org.jetbrains.annotations.Nullable;
 import lombok.Data;
 import org.babyfish.jimmer.Input;
 import org.mapstruct.BeanMapping;
@@ -15,18 +17,16 @@ import com.example.server.model.entitiy.Member;
 public class MemberInput implements Input<Member> {
     private Integer id;
 
-    private String name;
+    @Nullable
+    private String username;
 
+    @Nullable
     private String password;
 
     private Integer phone;
 
-    private Object gender;
-
-    private Date createdTime;
-
-    private Date modifiedTime;
-
+    @Nullable
+    private Gender gender;
 
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 

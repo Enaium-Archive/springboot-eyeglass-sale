@@ -17,10 +17,6 @@ public class ImageInput implements Input<Image> {
 
     private String hash32;
 
-    private Date createdTime;
-
-    private Date modifiedTime;
-
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 
     @Override

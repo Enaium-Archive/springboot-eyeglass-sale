@@ -1,11 +1,8 @@
 package com.example.server.model.entitiy;
 
 import com.example.server.model.entitiy.common.BaseEntity;
-import jakarta.annotation.Nullable;
-import org.babyfish.jimmer.sql.Entity;
-import org.babyfish.jimmer.sql.GeneratedValue;
-import org.babyfish.jimmer.sql.GenerationType;
-import org.babyfish.jimmer.sql.Id;
+import org.babyfish.jimmer.sql.*;
+import org.jetbrains.annotations.Nullable;
 
 @Entity
 public interface Member extends BaseEntity {
@@ -13,14 +10,15 @@ public interface Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id();
 
-    String name();
+    @Key
+    String username();
 
     String password();
 
     @Nullable
-    Integer phone();
+    String phone();
 
     @Nullable
-    Object gender();
+    Gender gender();
 }
 

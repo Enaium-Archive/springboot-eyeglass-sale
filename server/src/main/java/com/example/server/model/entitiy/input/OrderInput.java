@@ -21,11 +21,6 @@ public class OrderInput implements Input<Order> {
 
     private Integer quantity;
 
-    private Date createdTime;
-
-    private Date modifiedTime;
-
-
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 
     @Override

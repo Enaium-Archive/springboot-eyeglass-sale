@@ -3,6 +3,7 @@ package com.example.server.model.entitiy.input;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.jetbrains.annotations.Nullable;
 import lombok.Data;
 import org.babyfish.jimmer.Input;
 import org.mapstruct.BeanMapping;
@@ -16,6 +17,7 @@ import com.example.server.model.entitiy.Commodity;
 public class CommodityInput implements Input<Commodity> {
     private Integer id;
 
+    @Nullable
     private String name;
 
     private Integer imageId;
@@ -26,12 +28,8 @@ public class CommodityInput implements Input<Commodity> {
 
     private Integer maximumPrescription;
 
+    @Nullable
     private String description;
-
-    private Date createdTime;
-
-    private Date modifiedTime;
-
 
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 
