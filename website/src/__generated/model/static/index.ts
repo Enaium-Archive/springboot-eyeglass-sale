@@ -1,5 +1,13 @@
+export type { CommodityInput } from './CommodityInput';
+export type { ImageInput } from './ImageInput';
+export type { InetAddress } from './InetAddress';
+export type { InputStream } from './InputStream';
 export type { MemberInput } from './MemberInput';
+export type { MultipartFile } from './MultipartFile';
 export type { Page } from './Page';
 export type { Pageable } from './Pageable';
+export type { Resource } from './Resource';
 export type { Session } from './Session';
 export type { Sort } from './Sort';
+export type { URI } from './URI';
+export type { URL } from './URL';

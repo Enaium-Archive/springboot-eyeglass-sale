@@ -9,8 +9,14 @@ public interface Order extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id();
 
+    @IdView
+    int memberId();
+
     @ManyToOne
     Member member();
+
+    @IdView
+    int commodityId();
 
     @ManyToOne
     Commodity commodity();

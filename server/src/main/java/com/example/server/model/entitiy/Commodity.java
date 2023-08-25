@@ -3,10 +3,7 @@ package com.example.server.model.entitiy;
 import java.math.BigDecimal;
 
 import com.example.server.model.entitiy.common.BaseEntity;
-import org.babyfish.jimmer.sql.Entity;
-import org.babyfish.jimmer.sql.GeneratedValue;
-import org.babyfish.jimmer.sql.GenerationType;
-import org.babyfish.jimmer.sql.Id;
+import org.babyfish.jimmer.sql.*;
 
 @Entity
 public interface Commodity extends BaseEntity {
@@ -16,13 +13,17 @@ public interface Commodity extends BaseEntity {
 
     String name();
 
+    @IdView
     int imageId();
+
+    @ManyToOne
+    Image image();
 
     BigDecimal price();
 
-    Integer minimumPrescription();
+    int minimumPrescription();
 
-    Integer maximumPrescription();
+    int maximumPrescription();
 
     String description();
 }

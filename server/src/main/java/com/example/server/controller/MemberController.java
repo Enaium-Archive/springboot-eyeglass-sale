@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository repository;
 
     @GetMapping("/members/")
     public Page<@FetchBy("DEFAULT") Member> getMembers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return memberRepository.findAll(PageRequest.of(page, size), DEFAULT);
+        return repository.findAll(PageRequest.of(page, size), DEFAULT);
     }
 
     @PutMapping("/members/")
     public void saveMember(@RequestBody MemberInput input) {
-        memberRepository.save(input);
+        repository.save(input);
     }
 
     private static final Fetcher<Member> DEFAULT = MemberFetcher.$.allScalarFields().password(false);

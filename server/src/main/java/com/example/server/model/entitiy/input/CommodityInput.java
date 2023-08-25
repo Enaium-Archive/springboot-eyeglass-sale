@@ -20,8 +20,9 @@ public class CommodityInput implements Input<Commodity> {
     @Nullable
     private String name;
 
-    private Integer imageId;
+    private ImageInput image;
 
+    @Nullable
     private BigDecimal price;
 
     private Integer minimumPrescription;

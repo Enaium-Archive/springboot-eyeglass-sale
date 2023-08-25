@@ -10,6 +10,10 @@ export type AllErrors =
 ;
 
 export type ApiErrors = {
+    "commodityController": {
+    },
+    "imageController": {
+    },
     "memberController": {
     },
     "sessionController": {
