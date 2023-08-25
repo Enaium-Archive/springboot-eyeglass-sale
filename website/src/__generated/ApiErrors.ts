@@ -16,6 +16,8 @@ export type ApiErrors = {
     },
     "memberController": {
     },
+    "orderController": {
+    },
     "sessionController": {
         "login": AllErrors & (
             {

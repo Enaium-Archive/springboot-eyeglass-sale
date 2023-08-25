@@ -4,7 +4,6 @@ import com.example.server.model.entitiy.Image;
 import com.example.server.model.entitiy.ImageDraft;
 import com.example.server.model.entitiy.ImageTable;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import org.babyfish.jimmer.sql.JSqlClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -30,7 +29,7 @@ public class ImageController {
         this.imageDir = imageDir;
     }
 
-    @GetMapping("/images/{id}")
+    @GetMapping("/images/{id}/")
     public void getImage(@PathVariable int id, HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         final Image image = sql.createQuery(IMAGE_TABLE).where(IMAGE_TABLE.id().eq(id)).select(IMAGE_TABLE).fetchOptional().orElseThrow();

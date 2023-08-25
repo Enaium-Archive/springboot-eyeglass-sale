@@ -4,5 +4,7 @@ export { ImageController } from './ImageController';
 export type { ImageControllerOptions } from './ImageController';
 export { MemberController } from './MemberController';
 export type { MemberControllerOptions } from './MemberController';
+export { OrderController } from './OrderController';
+export type { OrderControllerOptions } from './OrderController';
 export { SessionController } from './SessionController';
 export type { SessionControllerOptions } from './SessionController';

@@ -1,4 +1,4 @@
-import { RequestOf } from '@/__generated'
+import type { RequestOf } from '@/__generated'
 import type { MemberInput } from '@/__generated/model/static'
 import { api } from '@/common/ApiInstance'
 import { useImmer } from '@/hooks/useImmer'

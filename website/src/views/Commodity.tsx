@@ -1,4 +1,4 @@
-import { RequestOf } from '@/__generated'
+import type { RequestOf } from '@/__generated'
 import type { CommodityInput } from '@/__generated/model/static'
 import { BASE_URL, api } from '@/common/ApiInstance'
 import { useImmer } from '@/hooks/useImmer'
@@ -57,8 +57,9 @@ const Commodity = defineComponent(() => {
     {
       title: '图片',
       key: 'image',
-      render: (row) => <NImage width={50} src={`${BASE_URL}/images/${row.image.id}`} />
+      render: (row) => <NImage width={50} src={`${BASE_URL}/images/${row.image.id}/`} />
     },
+    
     {
       title: '价格',
       key: 'price'
