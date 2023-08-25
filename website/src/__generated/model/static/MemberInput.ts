@@ -8,7 +8,7 @@ export interface MemberInput {
     
     readonly password?: string;
     
-    readonly phone?: number;
+    readonly phone: string;
     
     readonly username?: string;
 }

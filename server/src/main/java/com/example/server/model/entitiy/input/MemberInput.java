@@ -23,7 +23,7 @@ public class MemberInput implements Input<Member> {
     @Nullable
     private String password;
 
-    private Integer phone;
+    private String phone;
 
     @Nullable
     private Gender gender;
