@@ -6,10 +6,6 @@ import org.jetbrains.annotations.Nullable;
 
 @Entity
 public interface Member extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id();
-
     @Key
     String username();
 

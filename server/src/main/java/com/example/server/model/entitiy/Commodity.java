@@ -7,10 +7,6 @@ import org.babyfish.jimmer.sql.*;
 
 @Entity
 public interface Commodity extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id();
-
     String name();
 
     @IdView
@@ -28,5 +24,11 @@ public interface Commodity extends BaseEntity {
     int view();
 
     String description();
+
+    @IdView
+    int categoryId();
+
+    @ManyToOne
+    Category category();
 }
 
