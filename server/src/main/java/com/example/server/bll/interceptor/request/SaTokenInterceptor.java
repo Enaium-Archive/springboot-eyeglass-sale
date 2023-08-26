@@ -27,11 +27,11 @@ public class SaTokenInterceptor extends SaInterceptor implements StpInterface {
 
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        return memberRepository.findById((Integer) loginId).map(member -> Collections.singletonList(member.role().name())).orElse(Collections.emptyList());
+        return Collections.emptyList();
     }
 
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        return Collections.emptyList();
+        return memberRepository.findById(Integer.parseInt(String.valueOf(loginId))).map(member -> Collections.singletonList(member.role().name())).orElse(Collections.emptyList());
     }
 }

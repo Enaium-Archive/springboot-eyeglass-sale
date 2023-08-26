@@ -4,7 +4,7 @@ import type { MemberInput, Session } from '@/__generated/model/static'
 import { api } from '@/common/ApiInstance'
 import type { ApiErrors } from '@/__generated'
 import { useSessionStore } from '@/store'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 const Login = defineComponent(() => {
   const router = useRouter()
@@ -56,6 +56,7 @@ const Login = defineComponent(() => {
           >
             <NInput v-model:value={input.value.password} />
           </NFormItem>
+          <RouterLink to={'/register'}>注册</RouterLink>
           <NButton class={'w-full'} type={'primary'} onClick={submit}>
             登录
           </NButton>

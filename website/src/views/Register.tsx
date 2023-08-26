@@ -2,7 +2,7 @@ import { defineComponent, ref } from 'vue'
 import { NButton, NCard, NForm, NFormItem, NInput, type FormInst, useMessage } from 'naive-ui'
 import type { MemberInput } from '@/__generated/model/static'
 import { api } from '@/common/ApiInstance'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 const Login = defineComponent(() => {
   const router = useRouter()
@@ -45,6 +45,7 @@ const Login = defineComponent(() => {
           >
             <NInput v-model:value={input.value.password} />
           </NFormItem>
+          <RouterLink to={'/login'}>登录</RouterLink>
           <NButton class={'w-full'} type={'primary'} onClick={submit}>
             注册
           </NButton>
