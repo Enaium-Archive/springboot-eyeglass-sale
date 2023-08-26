@@ -21,12 +21,17 @@ import {
   type UploadInst,
   NGrid,
   NGridItem,
-  NInputNumber
+  NInputNumber,
+  NSelect,
+  NCard,
+  NTag,
+  NButtonGroup,
+  NPopconfirm
 } from 'naive-ui'
 import type { TableColumn } from 'naive-ui/es/data-table/src/interface'
 import { defineComponent, ref } from 'vue'
 import dayjs from 'dayjs'
-import type { CommodityDto } from '@/__generated/model/dto'
+import type { CategoryDto, CommodityDto } from '@/__generated/model/dto'
 import { useSessionStore } from '@/store'
 
 const Commodity = defineComponent(() => {
@@ -73,6 +78,10 @@ const Commodity = defineComponent(() => {
       key: 'maximumPrescription'
     },
     {
+      title: '分类',
+      key: 'category.name'
+    },
+    {
       title: '创建时间',
       key: 'createdTime',
       render: (row) => <div>{dayjs(row.createdTime).format('YYYY-MM-DD HH:mm:ss')}</div>
@@ -80,11 +89,31 @@ const Commodity = defineComponent(() => {
     {
       title: '操作',
       key: 'action',
-      render: (row: CommodityDto['CommodityController/DEFAULT']) => (
-        <NButton type={'primary'} onClick={() => (currentCommodity.value = { ...row })}>
-          修改
-        </NButton>
-      )
+      render: (row: CommodityDto['CommodityController/DEFAULT']) => {
+        return (
+          <NButtonGroup>
+            <NButton type={'primary'} onClick={() => (currentCommodity.value = { ...row })}>
+              修改
+            </NButton>
+            <NPopconfirm
+              v-slots={{ trigger: <NButton type={'error'}>删除</NButton> }}
+              onPositiveClick={() => {
+                api.commodityController
+                  .removeCommodity({ id: row.id })
+                  .then(() => {
+                    message.success('删除成功')
+                    refetch()
+                  })
+                  .catch(() => {
+                    message.error('请先删除该商品下的所有订单')
+                  })
+              }}
+            >
+              你确定要删除吗？
+            </NPopconfirm>
+          </NButtonGroup>
+        )
+      }
     }
   ]
 
@@ -95,6 +124,11 @@ const Commodity = defineComponent(() => {
   const { data, refetch } = useQuery({
     queryKey: ['commodity', options],
     queryFn: () => api.commodityController.getCommodities(options.value)
+  })
+
+  const categories = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => api.categoryController.getCategories()
   })
 
   const submit = () => {
@@ -111,8 +145,6 @@ const Commodity = defineComponent(() => {
         })
     })
   }
-
-  const uploadRef = ref<UploadInst | null>(null)
 
   const uploadImage = (options: UploadCustomRequestOptions) => {
     const formData = new FormData()
@@ -136,7 +168,6 @@ const Commodity = defineComponent(() => {
             id: data
           }
         }
-        uploadRef.value?.clear()
         message.success('上传成功')
       })
       .catch((error) => {
@@ -144,34 +175,79 @@ const Commodity = defineComponent(() => {
       })
   }
 
+  const removeCategory = (id: number) => {
+    api.categoryController
+      .removeCategory({ id })
+      .then(() => {
+        message.success('删除成功')
+        categories.refetch()
+      })
+      .catch(() => {
+        message.error('请先删除该分类下的所有商品')
+      })
+  }
+
+  const newCategory = ref('')
+  const showNewCategory = ref(false)
+
   return () =>
     data.value == undefined ? (
       <NSpin />
     ) : (
       <>
-        <NButton type={'primary'} onClick={() => (currentCommodity.value = {})}>
-          新增
-        </NButton>
+        <NCard v-slots={{ header: <div>商品管理</div> }}>
+          <NButton type={'primary'} onClick={() => (currentCommodity.value = { category: {} })}>
+            新增
+          </NButton>
+          <div class={'mt-5'} />
+          <NDataTable data={data.value.content as []} columns={columns} />
+          {data.value?.totalPages > 1 && (
+            <div class={'mt-5 flex-row-reverse'}>
+              <NPagination
+                page={data.value?.number + 1}
+                pageCount={data.value?.totalPages}
+                onUpdatePage={(page) => {
+                  setOptions((draft) => {
+                    draft.page = page - 1
+                  })
+                }}
+                onUpdatePageSize={(pageSize) => {
+                  setOptions((draft) => {
+                    draft.size = pageSize
+                  })
+                }}
+              />
+            </div>
+          )}
+        </NCard>
         <div class={'mt-5'} />
-        <NDataTable data={data.value.content as []} columns={columns} />
-        {data.value?.totalPages > 1 && (
-          <div class={'mt-5 flex-row-reverse'}>
-            <NPagination
-              page={data.value?.number + 1}
-              pageCount={data.value?.totalPages}
-              onUpdatePage={(page) => {
-                setOptions((draft) => {
-                  draft.page = page - 1
-                })
-              }}
-              onUpdatePageSize={(pageSize) => {
-                setOptions((draft) => {
-                  draft.size = pageSize
-                })
-              }}
-            />
-          </div>
-        )}
+        <NCard v-slots={{ header: <div>分类管理</div> }}>
+          {categories.data.value == undefined ? (
+            <NSpin />
+          ) : (
+            <>
+              <div>
+                <NButton type={'primary'} onClick={() => (showNewCategory.value = true)}>
+                  新增
+                </NButton>
+                <div class={'mt-5 flex gap-5 flex-wrap'}>
+                  {categories.data.value.map((item: CategoryDto['DEFAULT']) => {
+                    return (
+                      <NTag
+                        key={item.id}
+                        type={'primary'}
+                        closable
+                        onClose={() => removeCategory(item.id)}
+                      >
+                        {item.name}
+                      </NTag>
+                    )
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+        </NCard>
         <NModal
           show={currentCommodity.value != undefined}
           preset="dialog"
@@ -205,12 +281,7 @@ const Commodity = defineComponent(() => {
                   }
                 ]}
               >
-                <NUpload
-                  ref={uploadRef}
-                  customRequest={uploadImage}
-                  listType={'image-card'}
-                  max={1}
-                />
+                <NUpload customRequest={uploadImage} listType={'image-card'} max={1} />
               </NFormItem>
               <NFormItem
                 label={'价格'}
@@ -260,7 +331,32 @@ const Commodity = defineComponent(() => {
                   </NFormItem>
                 </NGridItem>
               </NGrid>
-
+              <NFormItem
+                label={'分类'}
+                path={'category.name'}
+                rule={{
+                  required: true,
+                  message: '请选择分类',
+                  trigger: ['blur', 'change']
+                }}
+              >
+                <NSelect
+                  filterable
+                  tag
+                  value={currentCommodity.value.category.name}
+                  onUpdateValue={(value: string) => {
+                    currentCommodity.value = {
+                      ...currentCommodity.value!,
+                      category: {
+                        name: value
+                      }
+                    }
+                  }}
+                  options={categories.data.value as []}
+                  labelField={'name'}
+                  valueField={'name'}
+                />
+              </NFormItem>
               <NFormItem>
                 <NButton type={'primary'} onClick={submit}>
                   提交
@@ -268,6 +364,37 @@ const Commodity = defineComponent(() => {
               </NFormItem>
             </NForm>
           )}
+        </NModal>
+        <NModal
+          preset={'confirm'}
+          show={showNewCategory.value}
+          onClose={() => (showNewCategory.value = false)}
+        >
+          <div class={'flex gap-5'}>
+            <NInput v-model:value={newCategory.value} />
+            <NButton
+              type={'primary'}
+              onClick={() => {
+                if (newCategory.value.trim() == '') {
+                  message.error('请输入分类名')
+                  return
+                }
+
+                api.categoryController
+                  .saveCategory({ body: { name: newCategory.value } })
+                  .then(() => {
+                    message.success('保存成功')
+                    newCategory.value = ''
+                    categories.refetch()
+                  })
+                  .catch(() => {
+                    message.error('分类名已存在')
+                  })
+              }}
+            >
+              提交
+            </NButton>
+          </div>
         </NModal>
       </>
     )

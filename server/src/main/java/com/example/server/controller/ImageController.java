@@ -1,5 +1,6 @@
 package com.example.server.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.example.server.model.entitiy.Image;
 import com.example.server.model.entitiy.ImageDraft;
 import com.example.server.model.entitiy.ImageTable;
@@ -29,6 +30,7 @@ public class ImageController {
         this.imageDir = imageDir;
     }
 
+    @SaIgnore
     @GetMapping("/images/{id}/")
     public void getImage(@PathVariable int id, HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);

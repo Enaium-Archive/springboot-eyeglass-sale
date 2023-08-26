@@ -21,6 +21,9 @@ const Login = defineComponent(() => {
           router.push('/login')
           message.success('注册成功')
         })
+        .catch((err) => {
+          message.error('注册失败')
+        })
     })
   }
 

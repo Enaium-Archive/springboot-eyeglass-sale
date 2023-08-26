@@ -1,5 +1,6 @@
 package com.example.server.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
 import com.example.server.bll.error.SessionError;
 import com.example.server.bll.error.SessionException;
@@ -19,6 +20,7 @@ public class SessionController {
 
     private final MemberRepository memberRepository;
 
+    @SaIgnore
     @PostMapping("/sessions/")
     @ThrowsAll(SessionError.class)
     public Session login(@RequestBody MemberInput memberInput) {

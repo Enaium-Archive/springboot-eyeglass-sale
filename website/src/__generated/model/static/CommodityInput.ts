@@ -1,6 +1,8 @@
-import type { ImageInput } from './';
+import type { CategoryInput, ImageInput } from './';
 
 export interface CommodityInput {
+    
+    readonly category: CategoryInput;
     
     readonly description?: string;
     

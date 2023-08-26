@@ -14,6 +14,8 @@ export type AllErrors =
 ;
 
 export type ApiErrors = {
+    "categoryController": {
+    },
     "commodityController": {
         "getCommodity": AllErrors & (
             {

@@ -56,6 +56,10 @@ const CommodityDetail = defineComponent(() => {
             <div class={'flex flex-col text-2xl'}>
               <div>{data.value.name}</div>
               <div>{data.value.description}</div>
+              <div class={'flex gap-5'}>
+                <div>分类:</div>
+                <div>{data.value.category.name}</div>
+              </div>
               <div class={'text-red-500'}>￥{data.value.price}</div>
               <div>浏览次数:{data.value.view}</div>
               <div class={'flex gap-5'}>

@@ -1,5 +1,6 @@
 package com.example.server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import com.example.server.model.entitiy.*;
 import com.example.server.model.entitiy.input.OrderInput;
@@ -43,6 +44,7 @@ public class OrderController {
         }
     }
 
+    @SaCheckRole("ADMIN")
     @GetMapping("/orders/monthly-count/")
     public long getMonthlyCount() {
         return repository.sql().createQuery(OrderTable.$)
@@ -50,6 +52,7 @@ public class OrderController {
                 .select(OrderTable.$.id()).count();
     }
 
+    @SaCheckRole("ADMIN")
     @GetMapping("/orders/quarterly-count/")
     public long getQuarterlyCount() {
         return repository.sql().createQuery(OrderTable.$)
@@ -63,6 +66,7 @@ public class OrderController {
         repository.insert(orderInput);
     }
 
+    @SaCheckRole("ADMIN")
     @DeleteMapping("/orders/{id}/")
     public void removeOrder(@PathVariable int id) {
         repository.deleteById(id);

@@ -5,6 +5,7 @@ import org.babyfish.jimmer.sql.*;
 
 @Entity
 public interface Category extends BaseEntity {
+    @Key
     String name();
 }
 

@@ -1,44 +1,28 @@
 package com.example.server.model.entitiy.input;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import org.jetbrains.annotations.Nullable;
+import com.example.server.model.entitiy.Category;
+import com.example.server.model.entitiy.Image;
 import lombok.Data;
 import org.babyfish.jimmer.Input;
+import org.jetbrains.annotations.Nullable;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
-import org.mapstruct.NullValueCheckStrategy;
-import com.example.server.model.entitiy.Commodity;
 
 @Data
-public class CommodityInput implements Input<Commodity> {
+public class CategoryInput implements Input<Category> {
     private Integer id;
 
     @Nullable
     private String name;
 
-    private ImageInput image;
-
-    @Nullable
-    private BigDecimal price;
-
-    private Integer minimumPrescription;
-
-    private Integer maximumPrescription;
-
-    @Nullable
-    private String description;
-
-    private CategoryInput category;
-
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 
     @Override
-    public Commodity toEntity() {
-        return CONVERTER.toCommodity(this);
+    public Category toEntity() {
+        return CONVERTER.toCategory(this);
     }
 
     @Mapper
@@ -47,6 +31,6 @@ public class CommodityInput implements Input<Commodity> {
                 unmappedTargetPolicy = ReportingPolicy.IGNORE,
                 nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
         )
-        Commodity toCommodity(CommodityInput input);
+        Category toCategory(CategoryInput input);
     }
 }

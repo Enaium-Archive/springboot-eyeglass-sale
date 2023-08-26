@@ -1,3 +1,4 @@
+export type { CategoryInput } from './CategoryInput';
 export type { CommodityInput } from './CommodityInput';
 export type { ImageInput } from './ImageInput';
 export type { InetAddress } from './InetAddress';

@@ -18,6 +18,10 @@ export const api = new Api(async ({ uri, method, body }) => {
     window.$router.push('/login')
     window.$message.error('请先登录')
     throw new Error()
+  } else if (response.status === 403) {
+    window.$router.push('/')
+    window.$message.error('权限不足')
+    throw new Error()
   }
 
   if (response.status !== 200) {

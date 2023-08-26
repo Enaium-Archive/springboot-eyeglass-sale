@@ -1,3 +1,5 @@
+export { CategoryController } from './CategoryController';
+export type { CategoryControllerOptions } from './CategoryController';
 export { CommodityController } from './CommodityController';
 export type { CommodityControllerOptions } from './CommodityController';
 export { ImageController } from './ImageController';

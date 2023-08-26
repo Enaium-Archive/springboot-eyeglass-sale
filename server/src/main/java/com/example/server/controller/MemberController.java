@@ -1,5 +1,7 @@
 package com.example.server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.example.server.model.entitiy.Member;
 import com.example.server.model.entitiy.MemberFetcher;
 import com.example.server.model.entitiy.input.MemberInput;
@@ -17,6 +19,7 @@ public class MemberController {
 
     private final MemberRepository repository;
 
+    @SaCheckRole("ADMIN")
     @GetMapping("/members/")
     public Page<@FetchBy("DEFAULT") Member> getMembers(
             @RequestParam(defaultValue = "0") int page,
@@ -30,6 +33,7 @@ public class MemberController {
         return repository.findById(id, DEFAULT).orElseThrow();
     }
 
+    @SaIgnore
     @PutMapping("/members/")
     public void saveMember(@RequestBody MemberInput input) {
         repository.save(input);
