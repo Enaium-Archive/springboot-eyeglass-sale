@@ -33,8 +33,8 @@ const Commodity = defineComponent(() => {
   const message = useMessage()
   const session = useSessionStore()
 
-  const currentCommodity = ref<CommodityInput | undefined>(undefined)
   const currentCommodityRef = ref<FormInst | undefined>(undefined)
+  const currentCommodity = ref<CommodityInput | undefined>(undefined)
 
   const columns: TableColumn<CommodityDto['CommodityController/DEFAULT']>[] = [
     {
@@ -59,7 +59,7 @@ const Commodity = defineComponent(() => {
       key: 'image',
       render: (row) => <NImage width={50} src={`${BASE_URL}/images/${row.image.id}/`} />
     },
-    
+
     {
       title: '价格',
       key: 'price'

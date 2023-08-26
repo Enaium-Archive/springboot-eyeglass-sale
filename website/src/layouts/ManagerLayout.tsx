@@ -17,6 +17,10 @@ const MainLayout = defineComponent(() => {
     {
       label: () => <RouterLink to={{ name: 'order' }}>订单管理</RouterLink>,
       key: 'order'
+    },
+    {
+      label: () => <RouterLink to={{ name: 'statistics' }}>统计</RouterLink>,
+      key: 'statistics'
     }
   ]
 

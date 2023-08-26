@@ -1,17 +1,15 @@
 import type { RequestOf } from '@/__generated'
+import type { OrderDto } from '@/__generated/model/dto'
 import { api } from '@/common/ApiInstance'
 import { useImmer } from '@/hooks/useImmer'
 import { useQuery } from '@tanstack/vue-query'
-import { NButton, NDataTable, NPagination, NPopconfirm, NSpin, useMessage } from 'naive-ui'
+import dayjs from 'dayjs'
+import { NDataTable, NPagination, NSpin } from 'naive-ui'
 import type { TableColumn } from 'naive-ui/es/data-table/src/interface'
 import { defineComponent } from 'vue'
-import type { OrderDto } from '@/__generated/model/dto'
-import dayjs from 'dayjs'
 import { RouterLink } from 'vue-router'
 
-const Member = defineComponent(() => {
-  const message = useMessage()
-
+const BuyHistory = defineComponent(() => {
   const columns: TableColumn<OrderDto['OrderController/DEFAULT']>[] = [
     {
       title: 'ID',
@@ -43,31 +41,13 @@ const Member = defineComponent(() => {
       title: '创建时间',
       key: 'createdTime',
       render: (row) => <div>{dayjs(row.createdTime).format('YYYY-MM-DD HH:mm:ss')}</div>
-    },
-    {
-      title: '操作',
-      key: 'action',
-      render: (row) => (
-        <NPopconfirm
-          onPositiveClick={() =>
-            api.orderController.removeOrder({ id: row.id }).then(() => {
-              message.success('删除成功')
-            })
-          }
-          v-slots={{
-            trigger: <NButton type={'error'}>删除</NButton>
-          }}
-        >
-          确认删除？
-        </NPopconfirm>
-      )
     }
   ]
 
   const [options, setOptions] = useImmer<RequestOf<typeof api.orderController.getOrders>>({})
 
   const { data } = useQuery({
-    queryKey: ['member', options],
+    queryKey: ['buyHistory', options],
     queryFn: () => api.orderController.getOrders(options.value)
   })
 
@@ -76,7 +56,7 @@ const Member = defineComponent(() => {
       <NSpin />
     ) : (
       <>
-        <NDataTable data={data.value.content as []} columns={columns} />
+        <NDataTable columns={columns} data={data.value?.content as []} />
         {data.value?.totalPages > 1 && (
           <div class={'mt-5 flex-row-reverse'}>
             <NPagination
@@ -99,4 +79,4 @@ const Member = defineComponent(() => {
     )
 })
 
-export default Member
+export default BuyHistory

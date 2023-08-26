@@ -4,6 +4,7 @@ export type { InetAddress } from './InetAddress';
 export type { InputStream } from './InputStream';
 export type { MemberInput } from './MemberInput';
 export type { MultipartFile } from './MultipartFile';
+export type { OrderInput } from './OrderInput';
 export type { Page } from './Page';
 export type { Pageable } from './Pageable';
 export type { Resource } from './Resource';

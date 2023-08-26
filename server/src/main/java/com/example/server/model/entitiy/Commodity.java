@@ -25,6 +25,8 @@ public interface Commodity extends BaseEntity {
 
     int maximumPrescription();
 
+    int view();
+
     String description();
 }
 

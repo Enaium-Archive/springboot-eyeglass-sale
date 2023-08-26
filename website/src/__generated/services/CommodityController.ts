@@ -43,6 +43,22 @@ export class CommodityController {
         return (await this.executor({uri: _uri, method: 'GET'})) as Page<CommodityDto['CommodityController/DEFAULT']>
     }
     
+    async getCommodity(options: CommodityControllerOptions['getCommodity']): Promise<
+        CommodityDto['CommodityController/DEFAULT']
+    > {
+        let _uri = '/commodities/';
+        _uri += encodeURIComponent(options.id);
+        _uri += '/';
+        return (await this.executor({uri: _uri, method: 'GET'})) as CommodityDto['CommodityController/DEFAULT']
+    }
+    
+    async removeCommodity(options: CommodityControllerOptions['removeCommodity']): Promise<void> {
+        let _uri = '/commodities/';
+        _uri += encodeURIComponent(options.id);
+        _uri += '/';
+        return (await this.executor({uri: _uri, method: 'DELETE'})) as void
+    }
+    
     async saveCommodity(options: CommodityControllerOptions['saveCommodity']): Promise<void> {
         let _uri = '/commodities/';
         return (await this.executor({uri: _uri, method: 'PUT', body: options.body})) as void
@@ -56,5 +72,7 @@ export type CommodityControllerOptions = {
         readonly minimumPrescription?: number, 
         readonly maximumPrescription?: number
     },
+    'getCommodity': {readonly id: number},
+    'removeCommodity': {readonly id: number},
     'saveCommodity': {readonly body: CommodityInput}
 }

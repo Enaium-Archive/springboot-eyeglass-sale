@@ -1,5 +1,9 @@
 export type AllErrors = 
     {
+        readonly family: "COMMODITY_ERROR",
+        readonly code: "COMMODITY_NOT_FOUND"
+    } | 
+    {
         readonly family: "SESSION_ERROR",
         readonly code: "PASSWORD_NOT_MATCHED"
     } | 
@@ -11,6 +15,13 @@ export type AllErrors =
 
 export type ApiErrors = {
     "commodityController": {
+        "getCommodity": AllErrors & (
+            {
+                readonly family: 'COMMODITY_ERROR',
+                readonly code: 'COMMODITY_NOT_FOUND',
+                readonly [key:string]: any
+            }
+        )
     },
     "imageController": {
     },

@@ -2,10 +2,13 @@ import type { RequestOf } from '@/__generated'
 import { BASE_URL, api } from '@/common/ApiInstance'
 import { useImmer } from '@/hooks/useImmer'
 import { useQuery } from '@tanstack/vue-query'
-import { NCard, NEllipsis, NGrid, NGridItem, NImage, NPagination, NSpin } from 'naive-ui'
+import { NButton, NCard, NEllipsis, NGrid, NGridItem, NImage, NPagination, NSpin } from 'naive-ui'
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 
 const Home = defineComponent(() => {
+  const router = useRouter()
+
   const [options, setOptions] = useImmer<RequestOf<typeof api.commodityController.getCommodities>>(
     {}
   )
@@ -19,7 +22,7 @@ const Home = defineComponent(() => {
     data.value == undefined ? (
       <NSpin />
     ) : (
-      <div class={'container mx-auto'}>
+      <>
         <NCard class={'mt-5'}>
           <NGrid xGap={5} yGap={5} cols={6}>
             {data.value.content.map((item) => {
@@ -37,8 +40,21 @@ const Home = defineComponent(() => {
                     }}
                   >
                     <NEllipsis>{item.name}</NEllipsis>
-                    <div>
-                      <span class={'text-2xl text-red-500'}>￥{item.price}</span>
+                    <div class={'flex justify-between'}>
+                      <div class={'text-2xl text-red-500'}>￥{item.price}</div>
+                      <NButton
+                        type={'primary'}
+                        onClick={() => {
+                          router.push({
+                            name: 'commodity-detail',
+                            params: {
+                              id: item.id
+                            }
+                          })
+                        }}
+                      >
+                        查看
+                      </NButton>
                     </div>
                   </NCard>
                 </NGridItem>
@@ -64,7 +80,7 @@ const Home = defineComponent(() => {
             </div>
           )}
         </NCard>
-      </div>
+      </>
     )
 })
 

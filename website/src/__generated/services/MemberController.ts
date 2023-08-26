@@ -6,6 +6,15 @@ export class MemberController {
     
     constructor(private executor: Executor) {}
     
+    async getMember(options: MemberControllerOptions['getMember']): Promise<
+        MemberDto['MemberController/DEFAULT']
+    > {
+        let _uri = '/members/';
+        _uri += encodeURIComponent(options.id);
+        _uri += '/';
+        return (await this.executor({uri: _uri, method: 'GET'})) as MemberDto['MemberController/DEFAULT']
+    }
+    
     async getMembers(options: MemberControllerOptions['getMembers']): Promise<
         Page<MemberDto['MemberController/DEFAULT']>
     > {
@@ -36,6 +45,7 @@ export class MemberController {
 }
 
 export type MemberControllerOptions = {
+    'getMember': {readonly id: number},
     'getMembers': {readonly page?: number, readonly size?: number},
     'saveMember': {readonly body: MemberInput}
 }

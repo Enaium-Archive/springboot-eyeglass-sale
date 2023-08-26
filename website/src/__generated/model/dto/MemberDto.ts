@@ -1,4 +1,4 @@
-import type { Gender } from '../enums';
+import type { Gender, Role } from '../enums';
 
 export type MemberDto = {
     'MemberController/DEFAULT': {
@@ -7,6 +7,7 @@ export type MemberDto = {
         readonly modifiedTime: string, 
         readonly username: string, 
         readonly phone?: string, 
-        readonly gender?: Gender
+        readonly gender?: Gender, 
+        readonly role: Role
     }
 }

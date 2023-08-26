@@ -20,5 +20,7 @@ public interface Member extends BaseEntity {
 
     @Nullable
     Gender gender();
+
+    Role role();
 }
 

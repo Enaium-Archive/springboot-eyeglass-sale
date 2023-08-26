@@ -22,5 +22,7 @@ public interface Order extends BaseEntity {
     Commodity commodity();
 
     Integer quantity();
+
+    Integer prescription();
 }
 

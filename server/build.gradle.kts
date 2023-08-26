@@ -21,7 +21,7 @@ repositories {
     mavenCentral()
 }
 
-val jimmer = "0.8.4"
+val jimmer = "0.8.10"
 
 dependencies {
 

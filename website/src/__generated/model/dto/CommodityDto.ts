@@ -7,6 +7,7 @@ export type CommodityDto = {
         readonly price: number, 
         readonly minimumPrescription: number, 
         readonly maximumPrescription: number, 
+        readonly view: number, 
         readonly description: string, 
         readonly image: {readonly id: number}
     }

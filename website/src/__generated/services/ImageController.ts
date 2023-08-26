@@ -8,6 +8,7 @@ export class ImageController {
     async getImage(options: ImageControllerOptions['getImage']): Promise<void> {
         let _uri = '/images/';
         _uri += encodeURIComponent(options.id);
+        _uri += '/';
         return (await this.executor({uri: _uri, method: 'GET'})) as void
     }
     

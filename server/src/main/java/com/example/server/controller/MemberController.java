@@ -25,6 +25,11 @@ public class MemberController {
         return repository.findAll(PageRequest.of(page, size), DEFAULT);
     }
 
+    @GetMapping("/members/{id}/")
+    public @FetchBy("DEFAULT") Member getMember(@PathVariable int id) {
+        return repository.findById(id, DEFAULT).orElseThrow();
+    }
+
     @PutMapping("/members/")
     public void saveMember(@RequestBody MemberInput input) {
         repository.save(input);

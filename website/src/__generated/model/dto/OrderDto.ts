@@ -1,10 +1,14 @@
 export type OrderDto = {
-    'DEFAULT': {
+    'OrderController/DEFAULT': {
+        readonly id: number, 
         readonly createdTime: string, 
         readonly modifiedTime: string, 
-        readonly id: number, 
-        readonly member: {readonly id: number}, 
-        readonly commodity: {readonly id: number}, 
-        readonly quantity?: number
+        readonly quantity?: number, 
+        readonly prescription?: number, 
+        readonly commodity: {
+            readonly id: number, 
+            readonly name: string, 
+            readonly price: number
+        }
     }
 }

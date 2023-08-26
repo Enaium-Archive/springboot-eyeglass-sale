@@ -43,12 +43,13 @@ const Member = defineComponent(() => {
     },
     {
       title: '性别',
-      key: 'gender'
+      key: 'gender',
+      render: (row) => (row.gender === 'FEMALE' ? '男' : '女')
     },
     {
       title: '创建时间',
       key: 'createdTime',
-      render: (row) => <div>{dayjs(row.createdTime).format('')}</div>
+      render: (row) => <div>{dayjs(row.createdTime).format('YYYY-MM-DD HH:mm:ss')}</div>
     },
     {
       title: '操作',

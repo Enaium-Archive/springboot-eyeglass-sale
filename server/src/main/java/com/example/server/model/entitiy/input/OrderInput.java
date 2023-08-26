@@ -17,9 +17,11 @@ public class OrderInput implements Input<Order> {
 
     private Integer memberId;
 
-    private Integer commodityId;
+    private CommodityInput commodity;
 
     private Integer quantity;
+
+    private Integer prescription;
 
     private static final Converter CONVERTER = Mappers.getMapper(Converter.class);
 
